@@ -2,20 +2,18 @@
 
 AI-powered social selling and lead-closing engine.
 
-## MVP
+## Current capabilities
 
-The first milestone focuses on compliant public-source lead ingestion and AI lead evaluation.
-
-### Core modules
-
-- Intent Radar: source adapters for public posts, starting with Reddit.
-- Lead Evaluator: structured LLM scoring, pain-point extraction, and product matching.
-- Outreach: value-first response drafts (human review by default).
-- API: FastAPI endpoints for ingestion and evaluation.
-
-## Safety and compliance
-
-Closvanta AI does not attempt to bypass platform anti-abuse controls. Source adapters must respect official APIs, robots/rate limits, platform terms, and applicable privacy/marketing laws. Automated outreach is disabled by default.
+- Public-source lead ingestion and AI evaluation foundation
+- Product and campaign APIs
+- Dashboard metrics and lead pipeline
+- Razorpay order/payment foundation
+- WhatsApp Cloud API webhook and outbound sender
+- Conversation history and AI closer layer
+- Paid-order delivery preparation
+- API authentication and rate-limit foundations
+- Docker deployment
+- GitHub Actions CI and automated tests
 
 ## Quick start
 
@@ -27,4 +25,10 @@ cp .env.example .env
 uvicorn app.main:app --reload
 ```
 
-Open `http://127.0.0.1:8000/docs` for the API documentation.
+Open `http://127.0.0.1:8000/docs` for API documentation.
+
+## Production
+
+Use PostgreSQL, HTTPS, a reverse proxy/API gateway, external rate limiting, backups, monitoring, and verified third-party webhook signatures. Keep all credentials in environment variables and never commit `.env`.
+
+WhatsApp outbound messaging must respect recipient consent and applicable platform rules. Payment state must only change after verified Razorpay events. Automated outreach remains disabled by default.
