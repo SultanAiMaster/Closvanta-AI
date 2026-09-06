@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Closvanta AI Dashboard</title>
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:1100px;margin:40px auto;padding:0 20px;background:#f6f7fb;color:#16181d}h1{margin-bottom:8px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}.card{background:white;border:1px solid #e5e7eb;border-radius:12px;padding:18px}.num{font-size:30px;font-weight:700;margin-top:8px}.lead{margin-top:24px}.muted{color:#667085;font-size:14px}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:12px;border-bottom:1px solid #eee}
+  </style>
+</head>
+<body>
+  <h1>Closvanta AI</h1><p class="muted">Social-selling lead pipeline</p>
+  <div id="stats" class="grid"></div>
+  <div class="lead"><h2>Recent Leads</h2><table><thead><tr><th>Source</th><th>Title</th><th>Status</th><th>Intent</th></tr></thead><tbody id="leads"></tbody></table></div>
+<script>
+async function load(){const s=await fetch('/dashboard/summary').then(r=>r.json());document.querySelector('#stats').innerHTML=Object.entries(s).map(([k,v])=>`<div class="card"><div class="muted">${k.replaceAll('_',' ')}</div><div class="num">${v}</div></div>`).join('');const leads=await fetch('/dashboard/leads').then(r=>r.json());document.querySelector('#leads').innerHTML=leads.map(l=>`<tr><td>${l.source}</td><td>${l.title||'(untitled)'}</td><td>${l.status}</td><td>${l.intent_score??'—'}</td></tr>`).join('')}
+load();
+</script>
+</body></html>
