@@ -1,7 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
+from app.campaigns import router as campaigns_router
 from app.config import settings
+from app.dashboard import router as dashboard_router
 from app.db import get_db, init_db
 from app.evaluator import LeadEvaluator
 from app.models import EvaluateRequest, Product
@@ -9,7 +11,9 @@ from app.outreach import OutreachDraftGenerator
 from app.scrapers.reddit import RedditScraper
 from app.services import create_draft, create_product, save_evaluation, upsert_lead
 
-app = FastAPI(title="Closvanta AI", version="0.2.0")
+app = FastAPI(title="Closvanta AI", version="0.3.0")
+app.include_router(dashboard_router)
+app.include_router(campaigns_router)
 
 
 @app.on_event("startup")
@@ -19,7 +23,7 @@ def startup() -> None:
 
 @app.get("/health")
 async def health() -> dict[str, str]:
-    return {"status": "ok", "service": "closvanta-ai"}
+    return {"status": "ok", "service": "closvanta-ai", "version": "0.3.0"}
 
 
 @app.get("/leads/reddit")
