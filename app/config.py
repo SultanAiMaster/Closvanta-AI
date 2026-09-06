@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./closvanta.db"
     reddit_user_agent: str = "ClosvantaAI/0.1"
     reddit_subreddits: str = "saas,Entrepreneur,ecommerce"
+    razorpay_key_id: str = ""
+    razorpay_key_secret: str = ""
+    razorpay_webhook_secret: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
